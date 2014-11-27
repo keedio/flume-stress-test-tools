@@ -3,10 +3,8 @@
 logDir="logs"
 logFile="$logDir/appendToFile.log"
 
-outputDir="/tmp/spoolDir"
-outputFile="$outputDir/growingFile.txt"
-appendDelay=1
-rotateDelay=30
+inputDir="/tmp/spoolDir"
+inputFile="$outputDir/growingFile.txt"
 
 start() {
   echo "Starting appendToFile"
@@ -14,12 +12,12 @@ start() {
   then
     mkdir $logDir
   fi
-  if [ ! -d $outputDir ]
+  if [ ! -d $inputDir ]
   then
-    mkdir $outputDir
+    mkdir $inputDir
   fi
 
-  ./appendToFile.sh $outputFile >> $logFile 2>&1 &
+  ./appendToFile.sh $inputFile >> $logFile 2>&1 &
 
   RETVAL=$?
   return $RETVAL
