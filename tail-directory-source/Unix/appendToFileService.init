@@ -1,0 +1,58 @@
+#!/bin/bash
+
+logDir="logs"
+logFile="$logDir/appendToFile.log"
+
+outputDir="/tmp/spoolDir"
+outputFile="$outputDir/growingFile.txt"
+appendDelay=1
+rotateDelay=30
+
+start() {
+  echo "Starting appendToFile"
+  if [ ! -d $logDir ]
+  then
+    mkdir $logDir
+  fi
+  if [ ! -d $outputDir ]
+  then
+    mkdir $outputDir
+  fi
+
+  ./appendToFile.sh $outputFile >> $logFile 2>&1 &
+
+  RETVAL=$?
+  return $RETVAL
+}
+
+stop() {
+  echo "Stoping appendToFile "
+  pkill -f appendToFile.sh
+}
+
+restart() {
+    stop
+    start
+}
+
+status() {
+  pid=$(pgrep -f appendToFile.sh)
+
+  if [ -z $pid ]; then
+    echo "appendToFile is NOT running."
+    return 1
+  else
+    echo "appendToFile is running (pid is $pid)."
+  fi
+
+}
+
+case "$1" in
+  start)   start;;
+  stop)    stop;;
+  restart) restart;;
+  status)  status;;
+  *)       echo "Usage: $0 {start|stop|restart}"
+           RETVAL=2;;
+esac
+exit $RETVAL
