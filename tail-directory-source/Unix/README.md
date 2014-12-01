@@ -13,7 +13,7 @@ Use to launch a procces that starts to run appendToFile, the default directory f
 
 
 - findLineLost.sh  
-```$ ./findLineLost.sh <flumeOutputFileToChec>```
+```$ ./findLineLost.sh <flumeOutputFileToCheck>```
 This is used to test the correct result of lines proccesed by flume, checking if some line is lost, or duplicate.  
 If the command ends with any result all lines was sent succesfully.  
 Try this flume sink config for check a local output file with that script:
